@@ -18,28 +18,28 @@
 ## 🌐 System Flow
 
 ```mermaid
-flowchart
-    participant User as User (Frontend)
-    participant API as Yahoo Finance API
-    participant Server as Backend (Node.js)
-    participant Redis as Redis (Cache + Pub/Sub)
-    participant MongoDB as MongoDB
+sequenceDiagram
+    participant User
+    participant API
+    participant Server
+    participant Redis
+    participant MongoDB
 
     Note over Server: Scheduled Job (Every 5 mins)
     loop Batch Processing (10 stocks/batch)
-        Server->>API: GET /quotes (Batch of 10)
+        Server->>API: GET /quotes
         API-->>Server: Stock data
-        Server->>Redis: Cache all stocks (HSET)
+        Server->>Redis: Cache stocks
     end
 
     Note over Server: Real-Time Updates
-    Redis->>Server: Pub/Sub "stock_updates"
-    Server->>MongoDB: Query subscribed users
+    Redis->>Server: Pub/Sub update
+    Server->>MongoDB: Query users
     MongoDB-->>Server: User list
-    loop For each subscribed user
-        Server->>Redis: Get user's stocks (HGET)
+    loop For each user
+        Server->>Redis: Get stocks
         Redis-->>Server: Stock data
-        Server->>User: WebSocket (stockUpdate)
+        Server->>User: WebSocket update
     end
 ```
 
