@@ -18,7 +18,7 @@
 ## 🌐 System Flow
 
 ```mermaid
-sequenceDiagram
+flowchart
     participant User as User (Frontend)
     participant API as Yahoo Finance API
     participant Server as Backend (Node.js)
@@ -95,7 +95,7 @@ Background Jobs	| Node.js Cron	         | Fetches stock data periodically
   - If not → fetch from API → cache it
 
 ```mermaid
-graph TB
+flowchart  TB
     A[Request] --> B{Cache Exists?}
     B -->|Yes| C[Return Redis Data]
     B -->|No| D[Fetch from Yahoo]
