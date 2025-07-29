@@ -201,7 +201,7 @@ flowchart  TB
 
 ## 🎨 Frontend Architecture
 ```mermaid
-graph TD
+flowchart  TD
     A[React Components] --> B[Context API]
     B --> C[State Management]
     A --> D[WebSocket Service]
